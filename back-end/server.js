@@ -7,21 +7,24 @@ const cors = require("cors");
 // inicializo las bibliotecas
 const app = express();
 
-//lista blanca de sitios que van a poder acceder a mi api
-// var listaBlanca = ['http://localhost/8081'];
+const whitelist = ['http://localhost:8081'];
 
-// var corsOptions = {
-//   // origin: "http://localhost/8081"
-//   origin: function(origin, callback){
-//     if(listaBlanca.indexOf(origin) != -1){
-//       callback(null, true);
-//     }else{
-//       callback(new Error('No permitido por CORS'))
-//     }
-//   }
-// };
+// definir las opciones de CORS
+const corsOptions = {
+  origin: function (origin, callback) {
+      if (whitelist.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Acceso denegado por CORS'));
+      }
+    },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  optionsSuccessStatus: 200
+};
 
-app.use(cors());
+app.use(cors(corsOptions));
+
 
 // analizar solicitudes de tipo de contenido - application/json
 app.use(bodyParser.json());
@@ -32,8 +35,8 @@ app.use(bodyParser.urlencoded( {extended: true }));
 
 //ruta simple 
 //ruta con la validacion de lista blanca
-app.get("/", (req, res) => {
-// app.get('/', cors(corsOptions), (req,res) => {
+// app.get("/", (req, res) => {
+app.get('/', cors(corsOptions), (req,res) => {
   // res.json(listaBlanca);
   res.json({ message: "Bienvenido a la aplicación de Juan"});
 })
