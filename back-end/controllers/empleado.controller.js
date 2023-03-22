@@ -1,6 +1,6 @@
 //traigame el array db llenado en modelos
 const db = require('../models');
-const Empleado = db.empleados;
+const Empleado = db.empleado;
 const Op = db.Sequelize.Op;
 
 //crear nuevo empleado
@@ -16,7 +16,9 @@ exports.crearEmpleado = (req, res) => {
     const empleado = {
         nombre: req.body.nombre,
         apellido: req.body.apellido,
-        documento: req.body.documento
+        documento: req.body.documento,
+        fechaNacimiento: req.body.fechaNacimiento,
+        estado: req.body.estado
     };
 
     //guardar empleado  en la base de datos
@@ -49,6 +51,27 @@ exports.buscaTodosLosEmpleados = (req, res) => {
         });
 };
 
+//funcion para buscar un empleado
+exports.buscarEmpleado = (req, res) =>{
+    const id = req.params.id;
+
+    Empleado.findByPk(id)
+    .then(data =>{
+            if(data){
+                res.send(data);
+            }else{
+                res.status(404).send({
+                    message: `No se ha encontrado el empleado con el id ${id}`
+                });
+            }
+        }
+    )
+    .catch(err =>{
+        res.status(500).send({
+            message: `Error al buscar el empleado con el id ${id}`
+        });
+    });
+}
 //actualizar empleado
 exports.actualizarEmpleado = (req, res) => {
     const id = req.params.id;
@@ -75,4 +98,20 @@ exports.actualizarEmpleado = (req, res) => {
         });
     });
 }
+
+// exports.allAccess = (req, res) => {
+//     res.status(200).send("Contenido publico");
+// };
+
+// exports.asesorBoard = (req, res) => {
+//     res.status(200).send("Contenido asesor");
+// };
+
+// exports.adminBoard = (req, res) => {
+//     res.status(200).send("Contenido admin");
+// };
+
+// exports.coordinadorBoard = (req, res) => {
+//     res.status(200).send("Contenido coordinador");
+// };
 

@@ -7,7 +7,8 @@ const cors = require("cors");
 // inicializo las bibliotecas
 const app = express();
 
-const whitelist = ['http://localhost:8081'];
+//comente momentaneamente la validacion
+// const whitelist = ['http://localhost:8081'];
 
 // definir las opciones de CORS
 const corsOptions = {
@@ -23,8 +24,8 @@ const corsOptions = {
   optionsSuccessStatus: 200
 };
 
-app.use(cors(corsOptions));
-
+// app.use(cors(corsOptions));
+app.use(cors());
 
 // analizar solicitudes de tipo de contenido - application/json
 app.use(bodyParser.json());
@@ -35,15 +36,16 @@ app.use(bodyParser.urlencoded( {extended: true }));
 
 //ruta simple 
 //ruta con la validacion de lista blanca
-// app.get("/", (req, res) => {
-app.get('/', cors(corsOptions), (req,res) => {
+app.get("/", (req, res) => {
+// app.get('/', cors(corsOptions), (req,res) => {
   // res.json(listaBlanca);
   res.json({ message: "Bienvenido a la aplicación de Juan"});
 })
 
 //incluir el ruteo de la tabla tutoriales
+require("./routes/auth.routes")(app);
 require("./routes/tutorial.routes")(app);
-// require("./routes/empleado.routes")(app);
+require("./routes/empleado.routes")(app);
 
 
 //colocar puerto, escuchar solicitudes

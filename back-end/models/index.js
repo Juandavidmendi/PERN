@@ -37,7 +37,19 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 //tambien llenamos el array db con el modelo de tutoriales
 db.tutorials = require("./tutorial.model.js")(sequelize, Sequelize);
-db.empleados = require("./empleado.model")(sequelize, Sequelize);
+db.empleado = require("./empleado.model")(sequelize, Sequelize);
+db.role = require("./role.model")(sequelize, Sequelize);
 
+db.role.belongsToMany(db.empleado, {
+    through: "empleados_roles",
+    foreignKey: "roleId",
+    otherKey: "empleadoId"
+});
+db.empleado.belongsToMany(db.role, {
+    through: "empleados_roles",
+    foreignKey: "empleadoId",
+    otherKey: "roleId"
+});
 
+db.ROLES = ["admin", "coordinador", "asesor"];
 module.exports = db;
