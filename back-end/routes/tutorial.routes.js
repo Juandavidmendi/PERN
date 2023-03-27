@@ -1,28 +1,29 @@
-module.exports = app => {
-    const tutorial = require("../controllers/tutorial.controller");
+const { authJwt } = require("../middleware"); // traiga el controlador de seguridad, con las funciones para validar tokens
+const tutorial = require("../controllers/tutorial.controller");
+var router = require("express").Router();
 
-    var router = require("express").Router();
+module.exports = app => {
 
     //crear nuevo tutorial
-    router.post("/", tutorial.create);
+    router.post("/", [authJwt.verificarToken], tutorial.create);
 
     //recibir todos los tutoriales
-    router.get("/", tutorial.findAll);
+    router.get("/", [authJwt.verificarToken], tutorial.findAll);
 
     //Recibir todos los tutoriales publicados
-    router.get("/published", tutorial.findAllPublished);
+    router.get("/published", [authJwt.verificarToken], tutorial.findAllPublished);
     
     //recibir un tutorial por id
-    router.get("/:id", tutorial.findOne);
+    router.get("/:id", [authJwt.verificarToken], tutorial.findOne);
 
     //actualizar un tutorial con id
-    router.put("/:id", tutorial.update);
+    router.put("/:id", [authJwt.verificarToken], tutorial.update);
     
     //eliminar un tutorial con id
-    router.delete("/:id", tutorial.delete);
+    router.delete("/:id", [authJwt.verificarToken],tutorial.delete);
     
     //eliminar todos los tutoriales
-    router.delete("/", tutorial.deleteAll);
+    router.delete("/", [authJwt.verificarToken], tutorial.deleteAll);
 
     app.use('/api/tutorials', router);
 };
