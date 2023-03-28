@@ -99,9 +99,9 @@ exports.actualizarEmpleado = (req, res) => {
     });
 }
 
-// exports.allAccess = (req, res) => {
-//     res.status(200).send("Contenido publico");
-// };
+exports.allAccess = (req, res) => {
+    res.status(200).send("Contenido publico");
+};
 
 // exports.asesorBoard = (req, res) => {
 //     res.status(200).send("Contenido asesor");

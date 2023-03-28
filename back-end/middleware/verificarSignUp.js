@@ -40,10 +40,11 @@ revisarUsuarioOEmailDuplicado = (req, res, next) => {
 };
 
 revisarExistenciaDeRoles = (req, res, next) => {
-    if(req.body.roles){
+    let rolprueba = 'admin';
+    if(rolprueba){
         // for(let i = 0; i < req.body.roles.length; i++){
             // if(!ROLES.includes(req.body.roles[i])){
-            if(!ROLES.includes(req.body.roles)){
+            if(!ROLES.includes(rolprueba)){
                 res.status(400).send({
                     message: `Error, el rol ${req.body.roles} no existe`
                 });

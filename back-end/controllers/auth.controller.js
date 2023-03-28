@@ -13,6 +13,8 @@ var bcrypt = require("bcryptjs");
 
 
 // exports.signup =(req, res) =>{
+//     let rolprueba = 'admin';
+
 //     //guardar usuario en la base de datps
 //     Empleado.create({
 //         username: req.body.username,
@@ -20,11 +22,12 @@ var bcrypt = require("bcryptjs");
 //         password: bcrypt.hashSync(req.body.password, 8)
 //     })
 //     .then(user =>{
+//         console.log(user);
 //         //si trae el rol por el cuerpo entre aqui
 //         if(user){
 //             Role.findAll({
 //                 where: {
-//                     name: req.body.roles
+//                     name: rolprueba
 //                 }
 //             }).then(roles =>{
 //                 user.setRoles(roles)

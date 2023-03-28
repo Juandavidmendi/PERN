@@ -11,6 +11,7 @@ module.exports = app => {
     });
     //recibir todos los tutoriales
     router.get("/", [authJwt.verificarToken],  empleado.buscaTodosLosEmpleados);
+    router.get("/all", empleado.allAccess);
     //recibir un empleado por id
     router.get("/:id", [authJwt.verificarToken], empleado.buscarEmpleado);
     router.post("/", [authJwt.verificarToken], empleado.crearEmpleado);
