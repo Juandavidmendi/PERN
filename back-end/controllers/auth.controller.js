@@ -12,43 +12,43 @@ var bcrypt = require("bcryptjs");
 
 
 
-// exports.signup =(req, res) =>{
-//     let rolprueba = 'admin';
+exports.signup =(req, res) =>{
+    let rolprueba = 'admin';
 
-//     //guardar usuario en la base de datps
-//     Empleado.create({
-//         username: req.body.username,
-//         email: req.body.email,
-//         password: bcrypt.hashSync(req.body.password, 8)
-//     })
-//     .then(user =>{
-//         console.log(user);
-//         //si trae el rol por el cuerpo entre aqui
-//         if(user){
-//             Role.findAll({
-//                 where: {
-//                     name: rolprueba
-//                 }
-//             }).then(roles =>{
-//                 user.setRoles(roles)
-//                 .then(() =>{
-//                     res.send({
-//                         message: "El usuario fue registrado de manera satisfactoria!"
-//                     });
-//                 });
-//             });
-//         }else{
-//             //de lo contrario el rol va a ser = 3 asesor
-//             res.send({ 
-//                 message: "No se pudo guardar el usuario" 
-//             });
+    //guardar usuario en la base de datps
+    Empleado.create({
+        username: req.body.username,
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, 8)
+    })
+    .then(user =>{
+        console.log(user);
+        //si trae el rol por el cuerpo entre aqui
+        if(user){
+            Role.findAll({
+                where: {
+                    name: rolprueba
+                }
+            }).then(roles =>{
+                user.setRoles(roles)
+                .then(() =>{
+                    res.send({
+                        message: "El usuario fue registrado de manera satisfactoria!"
+                    });
+                });
+            });
+        }else{
+            //de lo contrario el rol va a ser = 3 asesor
+            res.send({ 
+                message: "No se pudo guardar el usuario" 
+            });
             
-//         }
-//     })
-//     .catch(err => {
-//         res.status(500).send({ message: err.message });
-//     });
-// };
+        }
+    })
+    .catch(err => {
+        res.status(500).send({ message: err.message });
+    });
+};
 
 exports.signin = (req, res) =>{
     Empleado.findOne({
